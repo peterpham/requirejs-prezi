@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>RequireJS demo</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/demo.css">
+	<script src="assets/js/vendor/jquery/jquery-2.1.3.min.js"></script>
+	<script src="assets/js/require.js"></script>
+	<script>
+		define('jquery', [], function () { return jQuery; });
+		require.config({
+			baseUrl: "assets/js"
+		});
+	</script>
+	<!-- configuration for RequireJS -->
+	<script src="assets/js/core.js"></script>
+</head>
+<body class="tutorial flex-container"><div class="jumbotron container text-center flex-container">
+
+<button class="btn btn-lg btn-primary btn-example1">Click me</button>
+<script>
+require(["module/examplebutton"], function( btn ){
+	btn.init();
+});
+</script>
+
+</div></body>
+</html>

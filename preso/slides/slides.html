@@ -1,0 +1,852 @@
+<div class="slide-layout-title">
+  <h1>RequireJS</h1>
+  <h2>An introduction on RequireJS</h2>
+  <br /><br /><br /><br />
+  <h3><em>by</em> Peter Pham</h3>
+</div>
+<hr>
+<div>
+  <h1>What is it?</h1>
+  <p>"RequireJS is a JavaScript file and module loader." <small><i>(source: http://requirejs.org/)</i></small></p>
+</div>
+<hr>
+<div>
+  <h1>Why using it?</h1>
+  <ul>
+    <li>Manage JS dependency</li>
+    <li>Write better JS in <abbr title="Asynchronous module definition">AMD</abbr> pattern</li>
+    <li>Load JS on demand and asynchronously</li>
+    <li>Better testing</li>
+    <li>... because most of cool kids are using it.</li>
+  </ul>
+</div>
+<hr>
+<div>
+  <h2>Include require.js</h2>
+  <div class="highlight"><pre>&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;RequireJS demo&lt;/title&gt;
+  <em>&lt;script src="assets/js/require.js"&gt;&lt;/script&gt;</em>
+  &lt;script&gt;
+    require.config({
+      baseUrl: "assets/js"
+    })
+  &lt;/script&gt;
+&lt;/head&gt;
+</pre></div>
+</div>
+<hr>
+<div>
+  <h2>Include require.js</h2>
+  <p class="callout">baseUrl: root folder to call JS</p>
+  <div class="highlight"><pre>&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;RequireJS demo&lt;/title&gt;
+  &lt;script src="assets/js/require.js"&gt;&lt;/script&gt;
+  <em>&lt;script&gt;
+    require.config({
+      baseUrl: "assets/js"
+    })
+  &lt;/script&gt;</em>
+&lt;/head&gt;
+</pre></div>
+</div>
+<hr>
+<div>
+  <h2><code>require()</code></h2>
+  <p class="callout">load JS modules</p>
+  <div class="highlight"><pre>&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;RequireJS demo&lt;/title&gt;
+  &lt;script src="assets/js/require.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    require.config({
+      baseUrl: "assets/js"
+    })
+  &lt;/script&gt;
+  <em>&lt;script&gt;
+  require(
+       [
+          "module/simplemath",
+          "module/advancedmath"
+       ], 
+       function( app1, app2 ){
+          var result1 = app1.add(1, 5),
+              result2 = app2.substract(10, 2);
+          alert(result1 + '\r' + result2);
+        }
+  );
+  &lt;/script&gt;</em>
+&lt;/head&gt;
+</pre></div>
+</div>
+<hr>
+<div>
+  <h2><code>require()</code></h2>
+  <p class="callout">namespace modules to use locally: simplemath becomes app1</p>
+  <div class="highlight"><pre>require(
+        [
+          <em>"module/simplemath"</em>,
+          "module/advancedmath"
+        ], 
+        function( <em>app1</em>, app2 ){
+          var result1 = <em>app1</em>.add(1, 5),
+              result2 = app2.substract(10, 2);
+          alert(result1 + '\r' + result2);
+        }
+  );
+</pre></div>
+</div>
+<hr>
+<div>
+  <h2><code>require()</code></h2>
+  <p class="callout">namespace modules to use locally: advancedmath becomes app2</p>
+  <div class="highlight"><pre>require(
+        [
+          "module/simplemath",
+          <em>"module/advancedmath"</em>
+        ], 
+        function( app1, <em>app2</em> ){
+          var result1 = app1.add(1, 5),
+              result2 = <em>app2</em>.substract(10, 2);
+          alert(result1 + '\r' + result2);
+        }
+  );
+</pre></div>
+</div>
+<hr>
+<div>
+  <h2><code>require()</code></h2>
+  <p class="callout">function is only executed after all JS files are loaded</p>
+  <div class="highlight"><pre>require(
+        [
+          "module/simplemath",
+          "module/advancedmath"
+        ], 
+        <em>function( app1, app2 ){
+          var result1 = app1.add(1, 5),
+              result2 = app2.substract(10, 2);
+          alert(result1 + '\r' + result2);
+        }</em>
+  );
+</pre></div>
+</div>
+<hr>
+<div>
+  <h2><code>configuration</code></h2>
+  <p class="callout">include an configuration file</p>
+  <div class="highlight"><pre>&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;RequireJS demo&lt;/title&gt;
+  &lt;script src="assets/js/require.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    require.config({
+      baseUrl: "assets/js"
+    })
+  &lt;/script&gt;
+  <em>&lt;script src="assets/js/core.js"&gt;&lt;/script&gt;</em>
+  &lt;script&gt;
+  require(
+       [
+          "module/simplemath",
+          "module/advancedmath"
+       ], 
+       function( app1, app2 ){
+          var result1 = app1.add(1, 5),
+              result2 = app2.substract(10, 2);
+          alert(result1 + '\r' + result2);
+        }
+  );
+  &lt;/script&gt;
+&lt;/head&gt;
+</pre></div>
+</div>
+<hr>
+<div class="slide-layout-title">
+  <h2>Using shortname</h2>
+  <p class="callout">substitute file/folder path using 'paths' </p>
+  <p><small>core.js</small></p>
+  <div class="highlight"><pre>require.config({
+    <em>paths</em>: {
+        "SimpleMathModule": "module/simplemath"
+    }
+});
+</pre></div>
+<br />
+  <p><small>calling JS file using <code>require()</code></small></p>
+  <div class="highlight"><pre>require(
+        [
+          <em>"SimpleMathModule"</em>,
+          "module/advancedmath"
+        ], 
+        function( <em>app1</em>, app2 ){
+          ...
+        }
+  );
+</pre></div>
+</div>
+<hr>
+<div class="slide-layout-title">
+  <h1>Working with jQuery</h1>
+  <h2>Issues</h2>
+  <ul>
+    <li>jQuery is NOT a <strong>AMD</strong> module</li>
+    <li>jQuery creates a global scope <strong><code>window.jQuery</code></strong></li>
+    <li>Many JavaScript plugins require jQuery to be available before they are loaded. </li>
+    <li>In earthquake code base, many files contain inline JavaScript which assumes that jQuery has been already loaded.</li>
+  </ul>
+</div>
+<hr>
+<div>
+  <h1>Working with jQuery</h1>
+  <h2>The fix <small>(for earthquake)</small></h2>
+  <ul>
+    <li>load jQuery before RequireJS</li>
+    <li>define a dummy module that returns the global scope window.jQuery</li>
+  </ul><br />
+  <div class="highlight"><pre>&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;RequireJS demo&lt;/title&gt;
+  <em>&lt;script src="assets/js/vendor/jquery.js"&gt;&lt;/script&gt;</em>
+  &lt;script src="assets/js/require.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    <em>define('jquery', [], function () { return jQuery; });</em>
+    require.config({
+      baseUrl: "assets/js"
+    })
+  &lt;/script&gt;
+  &lt;script&gt;
+  require(
+       [
+          <em>"jquery"</em>, 
+          "SimpleMathModule",
+          "module/advancedmath"
+       ], 
+       function( <em>$</em>, app1, app2 ){
+          // now jquery is available
+          ...
+        }
+  );
+  &lt;/script&gt;
+&lt;/head&gt;
+</pre></div>
+</div>
+<hr>
+<div class="slide-layout-title">
+  <h1>Manage dependency</h1>
+</div>
+<hr>
+<div>
+  <h2>Configuration</h2>
+  <p class="callout">Using <code>shim</code> in core.js</p>  
+  <div class="highlight"><pre>require.config({
+    paths: {
+        "SimpleMathModule": "module/simplemath",
+
+        "bootstrap": "vendor/bootstrap/bootstrap.min",
+
+        "ckeditor-core": "vendor/ckeditor/ckeditor",
+        "ckeditor-jquery": "vendor/ckeditor/adapters/jquery"
+    },
+    shim: {
+      "bootstrap": {<em>"deps"</em> :["jquery"]},
+      "ckeditor-jquery":{<em>"deps"</em>:["jquery","ckeditor-core"]}
+    }
+});
+</pre></div>
+</div>
+<hr>
+<div class="slide-layout-title">
+  <h1>define()</h1>
+  <h2>Writing a module with <code>define()</code></h2>
+</div>
+<hr />
+<div>
+  <h2>Example</h2>
+  <p>Write a JavaScript module that adds an event listener to a button. When a button is clicked, it opens an alert with a number</p>
+  <br />
+  <h3>Basic markup</h3>
+  <div class="highlight"><pre>
+  &lt;button class="btn btn-lg btn-primary btn-example1"&gt;Click me&lt;/button&gt;
+</pre></div>
+  <br />
+  <iframe src="../index-05.html" width="100%" height="300"></iframe>
+</div>
+<hr>
+<div>
+  <h2>Step 1</h2>
+  <p>Include custom module</p>
+  <div class="highlight"><pre>
+  &lt;button class="btn btn-lg btn-primary btn-example1"&gt;Click me&lt;/button&gt;
+  <em>&lt;script&gt;
+    require(["module/examplebutton"], function(){
+    });
+&lt;/script&gt;</em>
+</pre></div>
+  <br />
+  This will load a JavaScript file named <code>examplebutton.js</code>
+</div>
+<hr>
+<div>
+  <h2><code>examplebutton.js</code></h2>
+  <p>The OLD way:</p>
+  <div class="highlight"><pre>
+    /*   examplebutton.js   */
+    $(".btn-example1").on("click", function(){
+      // do something
+      alert("300");
+    });
+</pre></div>
+<br />
+<p><b>This is NOT AMD</b></p>
+</div>
+<hr>
+<div>
+  <h1>Step 2: Writing AMD module</h1>
+  <h2>Recommended practices:</h2>
+  <ul>
+    <li>Always <b>define</b> dependencies even if there is none</li>
+  </ul>
+</div>
+<hr>
+<div>
+  <h1>Step 2: Writing AMD module</h1>
+  <h2>Recommended practices:</h2>
+  <ul>
+    <li>Always <b>define</b> dependencies even if there is none</li>
+    <li>The module should return an object</li>
+  </ul>
+</div>
+<hr>
+<div>
+  <h2><code>examplebutton.js</code></h2>
+  <p>The NEW way:</p>
+  <div class="highlight"><pre>
+  define(["jquery"], function ($) {
+    var ExampleButton = {
+      init: function(){
+        addEventListenerToButton();
+      },
+
+      addEventListenerToButton: function() {
+        $(".btn-example1").on("click", function(){
+          // do something
+          alert("300");
+        });     
+      }
+    }
+
+    return ExampleButton;
+  });
+</pre></div>
+</div>
+<hr>
+<div>
+  <h2><code>examplebutton.js</code></h2>
+  <p class="callout">This module depends on jquery</p>
+  <div class="highlight"><pre>
+  <em>define(["jquery"], function ($) {</em>
+    var ExampleButton = {
+      init: function(){
+        addEventListenerToButton();
+      },
+
+      addEventListenerToButton: function() {
+        $(".btn-example1").on("click", function(){
+          // do something
+          alert("300");
+        });     
+      }
+    }
+
+    return ExampleButton;
+  });
+</pre></div>
+</div>
+<hr>
+<div>
+  <h2><code>examplebutton.js</code></h2>
+  <p class="callout">create a local scope object representing this module</p>
+  <div class="highlight"><pre>
+  define(["jquery"], function ($) {
+    var <em>ExampleButton</em> = {
+      init: function(){
+        addEventListenerToButton();
+      },
+
+      addEventListenerToButton: function() {
+        $(".btn-example1").on("click", function(){
+          // do something
+          alert("300");
+        });     
+      }
+    }</pre><p class="callout">return this object</p><pre>
+    <em>return ExampleButton;</em>
+  });
+</pre></div>
+</div>
+<hr>
+<div>
+  <h2><code>examplebutton.js</code></h2>
+  <p class="callout">Expose public functions as required</p>
+  <div class="highlight"><pre>
+  define(["jquery"], function ($) {
+    var ExampleButton = {
+      <em>init</em>: function(){
+        addEventListenerToButton();
+      },
+
+      <em>addEventListenerToButton</em>: function() {
+        $(".btn-example1").on("click", function(){
+          // do something
+          alert("300");
+        });     
+      }
+    }
+
+    return ExampleButton;
+  });
+</pre></div>
+<br />
+<p><small>I often expose an <code>init()</code> function to initialize a module</small></p>
+</div>
+<hr>
+<div>
+  <h2>Step 3</h2>
+  <p>Init module</p>
+  <div class="highlight"><pre>
+  &lt;button class="btn btn-lg btn-primary btn-example1"&gt;Click me&lt;/button&gt;
+  &lt;script&gt;
+    require(["module/examplebutton"], function( <em>btn</em> ){
+      <em>btn.init();</em>
+    });
+&lt;/script&gt;
+</pre></div>
+  <br />
+  <iframe src="../index-06.html" width="100%" height="300"></iframe>
+</div>
+<hr>
+<div>
+  <h1>Writing AMD module</h1>
+  <h2>Recommended practices:</h2>
+  <ul>
+    <li>Always <b>define</b> dependencies even if there is none</li>
+    <li>The module should return an object</li>
+    <li>The module should allow configuration for flexibility and reusability</li>
+  </ul>
+</div>
+<hr>
+<div>
+  <h2><code>examplebutton.js</code></h2>
+  <p class="callout">Create a local scope <code>settings</code> object</p>
+  <div class="highlight"><pre>
+  define(["jquery"], function ($) {
+
+    <em>var settings = {
+      el: "",             <span style="color:#aaa;font-weight:normal">// selector for element</span>
+      number: undefined   <span style="color:#aaa;font-weight:normal">// number to alert</span>
+    };</em>
+
+    var ExampleButton = {</pre><p class="callout">settings can be override through init()</p><pre>
+      init: function(<em>options</em>){
+        <em>$.extend(true, settings, options);</em>
+        this.addEventListenerToButton();
+      },
+
+      addEventListenerToButton: function() {
+        $(<em>settings.el</em>).on("click", function(){
+          alert(<em>settings.number</em>);
+        });     
+      }
+    }
+
+    return ExampleButton;
+  });
+</pre></div>
+<hr>
+<div>
+  <h2>Initialise module with params</h2>
+  <div class="highlight"><pre>
+  &lt;button class="btn btn-lg btn-primary btn-example1"&gt;Click me&lt;/button&gt;
+  &lt;script&gt;
+    require(["module/examplebutton"], function( <em>btn</em> ){
+      btn.init({
+        <em>el    : ".btn-example1",
+number: "1000"</em>
+      });
+    });
+&lt;/script&gt;
+</pre></div>
+  <br />
+  <iframe src="../index-06v2.html" width="100%" height="300"></iframe>
+</div>
+<hr>
+<div>
+  <h1>What if...</h1>
+  <h2>You need to init the same module multiple times on the same page?</h2>
+</div>
+<hr>
+<div>
+  <h2>Example 1</h2>
+  <h3>Init module twice within a same require()</h3>
+  <div class="highlight"><pre>
+  &lt;button class="btn btn-lg btn-primary <em>btn-example1</em>"&gt;Button 1&lt;/button&gt;
+  &lt;button class="btn btn-lg btn-danger  <em>btn-example2</em>"&gt;Button 2&lt;/button&gt;
+  &lt;script&gt;
+    require(["module/examplebutton"], function( btn ){
+      <em>btn.init({
+        el    : ".btn-example1",
+        number: "1000"
+      });</em>
+      
+      <em>btn.init({
+        el    : ".btn-example2",
+        number: "2000"
+      });</em>
+    });
+&lt;/script&gt;
+</pre></div>
+  <br />
+  <iframe src="../index-07v1.html" width="100%" height="300"></iframe>
+</div>
+<hr>
+<div>
+  <h2>Example 2</h2>
+  <h3>Calling require() twice</h3>
+  <div class="highlight"><pre>
+  &lt;button class="btn btn-lg btn-primary <em>btn-example1</em>"&gt;Button 1&lt;/button&gt;
+  &lt;button class="btn btn-lg btn-danger  <em>btn-example2</em>"&gt;Button 2&lt;/button&gt;
+  &lt;script&gt;
+    <em>require(["module/examplebutton"], function( btn ){
+    btn.init({
+      el    : ".btn-example1",
+      number: "1000"
+    });
+});</em>
+
+    <em>require(["module/examplebutton"], function( btn ){  
+    btn.init({
+      el    : ".btn-example2",
+      number: "2000"
+    });
+});</em>
+&lt;/script&gt;
+</pre></div>
+  <br />
+  <iframe src="../index-07v2.html" width="100%" height="300"></iframe>
+</div>
+<hr>
+<div>
+  <h1>What went wrong?</h1>
+  <ul>
+    <li>RequireJS is only a JavaScript loader.<br/><b>It does NOT automatically create instances of module.</b></li>
+    <li>It is <del>author's</del><ins>YOUR</ins> responsibility to create object's instance depending on business requirements.</li>
+  </ul>
+</div>
+<hr>
+<div>
+  <h2><code>examplebutton.js</code></h2>
+  <p class="callout">This <code>settings</code> object is private variable for the <b>entire module</b>. However, it was modified every time when the function <code>init()</code> is called.</p>
+  <div class="highlight"><pre>&lt;script&gt;
+  define(["jquery"], function ($) {
+
+    var <em>settings</em> = {
+      el: "",             <span style="color:#aaa;font-weight:normal">// selector for element</span>
+      number: undefined   <span style="color:#aaa;font-weight:normal">// number to alert</span>
+    };
+
+    var ExampleButton = {
+      init: function(options){
+        <em>$.extend(true, settings, options);</em>
+        this.addEventListenerToButton();
+      },
+
+      addEventListenerToButton: function() {
+        $(settings.el).on("click", function(){
+          alert(settings.number);
+        });     
+      }
+    }
+
+    return ExampleButton;
+  });
+&lt;/script&gt;
+</pre></div>
+<hr>
+<div>
+  <h2>The fix</h2>
+  <p>Modify the module to return a class / function </p>
+  <div class="highlight"><pre>&lt;script&gt;
+  define(["jquery"], function ($) {
+
+    <em>var ExampleButton = function () {</em>
+
+      var settings = {
+        el: "",       // selector for element
+        number: undefined // number to alert
+      },
+      module = this;
+
+      module.init = function(options){
+        $.extend(true, settings, options);
+        this.addEventListenerToButton();
+      };
+
+      module.addEventListenerToButton = function() {
+        $(settings.el).on("click", function(){
+          alert(settings.number);
+        });     
+      }
+    <em>}</em>
+    return ExampleButton;
+  });
+&lt;/script&gt;
+</pre></div>
+</div>
+<hr />
+<div>
+  <h3>Create instances using <code>new</code> keyword</h3>
+  <div class="highlight"><pre>
+  &lt;button class="btn btn-lg btn-primary btn-example1"&gt;Button 1&lt;/button&gt;
+  &lt;button class="btn btn-lg btn-danger  btn-example2"&gt;Button 2&lt;/button&gt;
+  &lt;script&gt;
+    require(["module/examplebutton"], function( btn ){
+      <em>var btn1 = new btn();</em>
+      <em>btn1</em>.init({
+        el: '.btn-example1',
+        number: "1000"
+      });
+
+      <em>var btn2 = new btn();</em>
+      <em>btn2</em>.init({
+        el: '.btn-example2',
+        number: "2000"
+      });
+    });
+&lt;/script&gt;
+</pre></div>
+  <br />
+  <iframe src="../index-08v1.html" width="100%" height="300"></iframe>
+</div>
+<hr />
+<div>
+  <h1><span class="dos">Do's</span> &amp; <span class="donts">Don'ts</span></h1>
+</div>
+<hr />
+<div>
+  <h1><span class="dos">Do's</span></h1>
+  <ul>
+    <li>Create aliases for common 3rd party libraries that are frequently changed, for example:
+      <ul>
+        <li>jQuery</li>
+        <li>jQuery plugins/ Bootstrap JS</li>
+        <li>Underscore/ Lodash</li>
+        <li>CKEditor/ TinyMCE</li>
+        <li>D3/ NDV3/ C3</li>
+        <li>Backbone JS/ Ember JS/ Angular JS</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<hr />
+<div>
+  <h1><span class="dos">Do's</span></h1>
+  <ul>
+    <li>Assume that nothing is available, and define dependecies for only what you need.</li>
+    <li>Define dependencies for your dependencies
+      <ul>
+        <li><small>JS files are loaded asynchronously, therefore, do not assume if one has been loaded already</small></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<hr />
+<div>
+  <h1><span class="donts">Don'ts</span></h1>
+  <ul>
+    <li>Create aliases for every custom modules. <span class="hashtag">#overkill</span></li>
+  </ul>
+</div>
+<hr />
+<div>
+  <h1><span class="donts">Don'ts</span></h1>
+  <ul>
+    <li>Access global scope</li>
+  </ul>
+  <div class="highlight"><pre>
+  var <em>currentUserId</em> = #Val(rc.userid)#;
+  ...
+  <small style="color:#bbb">&lt;!-- after 20 lines of code --&gt;</small>
+  ...
+  require(["module/user-survey"], function(app){
+    var survey = new app({userid: <em>currentUserId</em>});
+  });
+</pre></div>
+</div>
+<hr />
+<div>
+  <h1><span class="dos">Do's</span></h1>
+  <ul>
+    <li>Wrap your code within require() as early as possible</li>
+  </ul>
+  <div class="highlight"><pre>
+  require(["module/user-survey"], function(app){
+    var <em>currentUserId</em> = #Val(rc.userid)#;
+    ...
+    <small style="color:#bbb">// after 20 lines of code </small>
+    ...
+    var survey = new app({userid: <em>currentUserId</em>});
+  });
+</pre></div>
+</div>
+<hr />
+<div>
+  <h1><span class="dos">Do's</span></h1>
+  <ul>
+    <li>But if you REALLY have to access global scope. Name it!</li>
+  </ul>
+  <div class="highlight"><pre>
+  function openDialog (url, width, height) {
+    ...
+  }
+
+
+  require(["jquery"], function($){
+
+    $('#id').on('click', function(){    
+      <em>window</em>.openDialog('index.cfm', 800, 600);
+    });
+
+  });
+</pre></div>
+</div>
+<hr />
+<div>
+  <h1><span class="dos">Do's</span></h1>
+  <ul>
+    <li>Still, better to define a module</li>
+  </ul>
+
+  <div class="highlight"><pre><small style="color:#bbb">/* utils.js */</small> 
+  define([], function(){
+    function openDialog (url, width, height) {
+    ...
+    }
+
+    return {
+      openDialog: openDialog
+    }
+  });
+</pre></div>
+  <br />
+  <div class="highlight"><pre>
+  require(["jquery", "utils"], function($, <em>Utils</em>){
+  
+    $('#id').on('click', function(){    
+      <em>Utils</em>.openDialog('index.cfm', 800, 600);
+    });
+
+  });
+</pre></div>
+</div>
+<hr />
+<div>
+  <h1><span class="donts">Don'ts</span></h1>
+  <ul>
+    <li>Using onclick on HTML mark up 
+      <ul>
+        <li><small>Mark up is mixed with code</small></li>
+        <li><small>code is run through <code>eval()</code></small></li>
+        <li><small>code runs in parent/global/ancestor and self scope <span class="hashtag">#scopeGoneWild</span></small></li>
+      </ul>
+    </li>
+  </ul>
+  <div class="highlight"><pre>
+  &lt;button id="btn" onclick="<em>openDialog('index.cfm')</em>"&gt; Launch &lt;/button&gt;
+</pre></div>
+<p></p>
+</div>
+<hr />
+<div>
+  <h1><span class="dos">Do's</span></h1>
+  <ul>
+    <li>Add event listener</li>
+  </ul>
+  <div class="highlight"><pre>
+  &lt;button id="btn"&gt; Launch &lt;/button&gt;
+
+  &lt;script&gt;
+  require(["jquery"], function($){
+    $('#btn').on('click', function(){
+      ...
+    });
+  });
+  &lt;/script&gt;
+</pre></div>
+<p></p>
+</div>
+<hr />
+<div class="slide-layout-title">
+  <h1>Require JS</h1>
+  <h2>Q &amp; A</h2>
+</div>
+<hr />
+<div class="slide-layout-title">
+  <h1>Other frameworks</h1>
+  <p>We are live in a time when there are <i style="color:#ccc">damn</i> too many frameworks. <span class="hashtag">#toomanychoices</span></p>
+</div>
+<hr />
+<div>
+  <h2>JavaScript loader frameworks</h2>
+  <p>RequireJS is not the only one. There are others.</p>
+  <ul>
+    <li>CommonJS</li>
+    <li>Bower</li>
+    <li>Grunt</li>
+    <li>Browserify</li>
+  </ul>
+</div>
+<hr />
+<div>
+  <h2>MV(C) frameworks</h2>
+  <ul>
+    <li>Angular JS</li>
+    <li>Backbone.js</li>
+    <li>Ember.js</li>
+    <li>KnockoutJS</li>
+    <li>Redact</li>
+    <li>Dojo</li>
+    <li>YUI</li>
+    <li>JavaScriptMVC</li>
+    <li>Meteor</li>
+  </ul>
+  <p>... and the list goes on</p>
+</div>
+<hr />
+<div>
+  <h2>JavaScript template engines</h2>
+  <ul>
+    <li>
+      Curly brackets { } group
+      <ul>
+        <li>Mustache</li>
+        <li>HandlebarsJS</li>
+        <li>Angular JS</li>
+        <li>Nunjuck</li>
+        <li>React</li>
+      </ul>
+    </li>
+    <li>ERB style group
+      <ul>
+        <li>Underscore templates</li>
+        <li>EJS</li>          
+      </ul>
+    </li>
+    <li>and the odd ones?
+      <ul>
+        <li>Jade</li>
+        <li>ES6</li>
+      </ul>
+    </li>
+  </ul>
+</div>

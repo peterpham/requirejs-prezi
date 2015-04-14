@@ -1,0 +1,24 @@
+html, body {
+	height:100%;
+}
+.tutorial {
+	
+}
+.tutorial .jumbotron {
+	min-height: 80%;
+}
+.flex-container {
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	-webkit-box-align: center;
+
+	align-items: center;
+	justify-content:center;
+}
+.flex-container button {
+	margin: 1em;
+}

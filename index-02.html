@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>RequireJS demo</title>
+	<script type="text/javascript" src="assets/js/require.js"></script>
+	<script type="text/javascript">
+		require.config({
+			baseUrl: "assets/js"
+		})
+	</script>
+	<script>
+	require([
+			 "module/simplemath",
+			 "module/advancedmath"
+			 ], function( app1, app2 ){
+		var result1 = app1.add(1, 5),
+			result2 = app2.substract(10, 2);
+		alert(result1 + '\r' + result2);
+	});
+	</script>
+</head>
+<body>
+</body>
+</html>
