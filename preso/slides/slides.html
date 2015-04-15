@@ -850,3 +850,76 @@ number: "1000"</em>
     </li>
   </ul>
 </div>
+<hr />
+<div>
+  <h2>Which one is better?</h2>
+  <blockquote><em>"Essentially, all models are wrong, but some are useful"</em> - George E. P. Box</blockquote>
+</div>
+<hr />
+<div>
+  <h2>JS template engine</h2>
+  <ul>
+    <li>Split presentation view from code</li>
+    <li>Improve readability and maintainability</li>
+    <li>Reusability <em>(not very likely but possible)</em></li>
+  </ul>
+
+</div>
+<hr />
+<div>
+  <h2>JS template engine</h2>
+  <p>Instead of this</p>
+  <div class="highlight"><pre>
+    &lt;script&gt;
+    require(["jquery"], function($){
+      ...
+      var $table = $('&lt;table&gt;');  
+      for (var u in users) {
+        <em>var row = '&lt;tr&gt;&lt;td&gt;'
+              + u.firstname  + ' ' + u.lastname 
+            +'&lt;/td&gt;'
+            +'&lt;td&gt;'
+              + u.position 
+            + '&lt;/td&gt;'
+            +'&lt;/tr&gt;';</em>
+        $table.append(row);
+      }
+
+    });
+&lt;/script&gt;    
+</pre></div>
+</div>
+<hr />
+<div>
+  <h2>JS template engine</h2>
+  <p>It can be rewritten to this (example with nunjuck)</p>
+  <div class="highlight"><pre>
+  &lt;script&gt;
+  require(["jquery", "nunjuck"], function($, nunjuck){
+    ...
+    var $table = $('&lt;table&gt;');  
+    for (var u in users) {
+      <em>var row = nunjuck.render("templates/table-row-user.html", {
+        user: u
+      });</em>
+      $table.append(row);
+    }
+
+  });
+&lt;/script&gt; 
+</pre></div>  
+<br />
+<code>table-row-user.html</code>
+<div class="highlight"><pre>
+  &lt;tr&gt;
+    &lt;td&gt;{{ user.firstname }} {{ user.lastname }}&lt;/td&gt;
+    &lt;td&gt;{{ user.position }}&lt;/td&gt;
+  &lt;/tr&gt;
+</pre></div> 
+</div>
+<hr />
+<div class="slide-layout-title">
+  <br /><br /><br /><br /><br /><br />
+  <h1 style="text-align:center">&lt;end /&gt;</h1>
+</div>
+

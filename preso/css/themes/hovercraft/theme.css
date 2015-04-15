@@ -70,6 +70,7 @@ pre em {
 	float: right;
 	max-width: 8em;
 	font-size:90%;
+	color: black;
 }
 .highlight {
 	border:1px solid #aaa;
