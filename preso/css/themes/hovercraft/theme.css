@@ -73,6 +73,8 @@ pre em {
 }
 .highlight {
 	border:1px solid #aaa;
+	background: #002A36;
+	color: white;
 }
 .dos {
 	color: green;
